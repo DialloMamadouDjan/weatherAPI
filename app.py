@@ -4,20 +4,10 @@ from flask import Flask, render_template, request, jsonify
 import json
 import datetime
 from random import *
-import logging
 
-# logging.basicConfig(
-#     filename="weatherLogs.log",
-#     level=logging.DEBUG,
-#     format='%(asctime)s %(levelname)s - %(message)s',
-#     datefmt='%d/%m/%Y %H:%M:%S',)
+
 
 app = Flask(__name__)
-
-
-@app.route('/')
-def hello():
-    return "Welcome mate !!"
 
 
 @app.route('/api/weather/<city>', methods=['GET', 'POST'])
@@ -66,19 +56,19 @@ def citySearch(city):
                 cityWeather[i]['picture_weather'] = link
         for i in range(len(cityWeather)) :
             cityWeather[i]['applicable_date'] 
-            v = cityWeather[i]['applicable_date']
-            v = datetime.datetime.strptime(v, '%Y-%m-%d')
-            v = ('{0}-{1}-{2:02}'.format(v.month, v.day, v.year))
-            v2 = cityWeather[i]['weather_state_name']
-            v3 = cityWeather[i]['the_temp']
+            _date = cityWeather[i]['applicable_date']
+            _date = datetime.datetime.strptime(_date, '%Y-%m-%d')
+            _date= ('{0}-{1}-{2:02}'.format(_date.month, _date.day, _date.year))
+            _date= cityWeather[i]['weather_state_name']
+            _date= cityWeather[i]['the_temp']
 
 
             del cityWeather[i]['applicable_date']
             del cityWeather[i]['weather_state_name']
             del cityWeather[i]['the_temp']
-            cityWeather[i]['Day'] = v
-            cityWeather[i]['weather'] = v2
-            cityWeather[i]['temperature'] = v3
+            cityWeather[i]['Day'] = _date
+            cityWeather[i]['weather'] = _date
+            cityWeather[i]['temperature'] = _date
 
         response["content"] = cityWeather
         return jsonify(response)
@@ -91,17 +81,6 @@ def citySearch(city):
         }
         }
         return jsonify(valueFalse)
-
-
-
-
-# loglevels={
-#     "debug":logging.DEBUG,
-#     "info":logging.INFO,
-#     "warning":logging.WARNING,
-#     "error":logging.ERROR,
-#     "critical":logging.CRITICAL
-#     }
 
 
 
